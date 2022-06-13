@@ -4,7 +4,7 @@ import { Canvas, extend, useFrame } from '@react-three/fiber'
 import { OrbitControls, Sparkles, shaderMaterial, useGLTF, useTexture } from '@react-three/drei'
 import glsl from 'babel-plugin-glsl/macro'
 
-export const App = ({ scale = Array.from({ length: 50 }, () => 0.5 + Math.random() * 4) }) => (
+export const App = ({ scale = Array.from({ length: 10 }, () => 0.5 + Math.random() * 4) }) => (
   <Canvas camera={{ fov: 45, position: [-4, 2, -4] }}>
     <Sparkles count={scale.length} size={scale} position={[0, 0.9, 0]} scale={[4, 1.5, 4]} speed={0.3} />
     <Model />
