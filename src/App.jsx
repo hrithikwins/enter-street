@@ -1,16 +1,51 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Color, AdditiveBlending } from 'three'
 import { Canvas, extend, useFrame } from '@react-three/fiber'
 import { OrbitControls, Sparkles, shaderMaterial, useGLTF, useTexture } from '@react-three/drei'
 import glsl from 'babel-plugin-glsl/macro'
+import classes from "./app.module.css"
 
-export const App = ({ scale = Array.from({ length: 50 }, () => 0.5 + Math.random() * 4) }) => (
-  <Canvas camera={{ fov: 45, position: [-4, 2, -4] }}>
-    <Sparkles count={scale.length} size={scale} position={[0, 0.9, 0]} scale={[4, 1.5, 4]} speed={0.3} />
-    <Model />
-    <OrbitControls />
-  </Canvas>
-)
+export const App = ({ scale = Array.from({ length: 50 }, () => 0.2 + Math.random() * 4) }) => {
+  const [cameraPositions, setCameraPositions] = useState([-4, 2, -4])
+  // setTimeout(() => {
+
+  //     setCameraPositions([-8,2,-4]);
+
+  // }, 200);
+
+  return (
+    <div className="flex flex-col">
+      <div className="flex justify-center h-48 items-center">
+        <h1 className={classes.heading}>Streetverse - The world of Streets</h1>
+      </div>
+      <div className="flex flex-col md:flex-row-reverse">
+        <div className="h-96 md:w-1/2 md:h-full">
+          <Canvas camera={{ fov: 45, position: cameraPositions }}>
+            <Sparkles count={scale.length} size={scale} position={[0, 1, 0]} scale={[4, 1.5, 4]} speed={0.2} />
+            <Model />
+            <OrbitControls />
+          </Canvas>
+        </div>
+        <div className="h-1/2 md:w-1/2">
+          <div className=" grid grid-rows-4 md:grid-rows-1 grid-cols-1">
+            <div className="flex justify-center items-center h-20 md:h-44 bg-purple-800 hover:bg-transparent hover:font-extrabold hover:scale-150 transition-all">
+              <h1>Explore NFTs</h1>
+            </div>
+            <div className="flex justify-center items-center h-20 md:h-44 bg-pink-700 hover:bg-transparent hover:font-extrabold hover:scale-150 transition-all">
+              <h1>Join Community</h1>
+            </div>
+            <div className="flex justify-center items-center h-20 md:h-44 bg-purple-800 hover:bg-transparent hover:font-extrabold hover:scale-150 transition-all">
+              <h1> Enter Streetverse</h1>
+            </div>
+            <div className="flex justify-center items-center h-20 md:h-44 bg-pink-700 hover:bg-transparent hover:font-extrabold hover:scale-150 transition-all">
+              <h1>Explore Roadmap</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 function Model(props) {
   const portalMaterial = useRef()
@@ -46,7 +81,7 @@ extend({
       vUv = uv;
     }`,
     glsl`
-    #pragma glslify: cnoise3 = require(glsl-noise/classic/3d.glsl) 
+    #pragma glslify: cnoise3 = require(glsl-noise/classic/3d.glsl)
     uniform float uTime;
     uniform vec3 uColorStart;
     uniform vec3 uColorEnd;

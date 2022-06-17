@@ -1,0 +1,9 @@
+.heading {
+  font-size: 120%;
+}
+
+@media screen and (min-width: 500px) {
+  .heading {
+    font-size: 220%;
+  }
+}
